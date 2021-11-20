@@ -1,5 +1,5 @@
 class Tracker
-  attr_reader :ips
+  attr_accessor :ips
 
   def initialize()
     @ips = []
@@ -13,5 +13,9 @@ class Tracker
     return [] if ips.empty?
 
     ips.tally.to_a.group_by { |key, _| key }.map(&:last).flatten(1)[0, 99]
+  end
+
+  def clear()
+    self.ips = [] unless self.ips.empty?
   end
 end

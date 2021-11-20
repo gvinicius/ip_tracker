@@ -42,4 +42,25 @@ describe Tracker do
       end
     end
   end
+
+  describe '#clear()' do
+    let(:ips) { [['145.87.2.109']*90, ['0.0.0.0']*9, ['1.8.2.1']].flatten }
+    let(:empty_ips) { [] }
+
+    context 'when the ips are filled' do
+      before do
+        subject.ips = ips
+      end
+
+      it 'clears the ips object' do
+        expect{ subject.clear() }.to change{ subject.ips }.from(ips).to([])
+      end
+    end
+
+    context 'when the ips are filled' do
+      it 'does not affect the ips object' do
+        expect{ subject.clear() }.to_not change{ subject.ips }
+      end
+    end
+  end
 end
