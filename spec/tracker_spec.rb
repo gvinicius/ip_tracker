@@ -17,4 +17,29 @@ describe Tracker do
       expect{ subject.request_handled(empty_address) }.to_not change{ subject.ips }
     end
   end
+
+  describe '#top100()' do
+    let(:ips) { [['145.87.2.109']*90, ['0.0.0.0']*9, ['1.8.2.1']].flatten }
+    let(:empty_ips) { [] }
+
+    context 'when the ips are filled' do
+      before do
+        allow(subject).to receive(:ips).and_return(ips)
+      end
+
+      it 'returns the correct rank' do
+        expect(subject.top100()).to eq([['145.87.2.109', 90], ['0.0.0.0', 9], ['1.8.2.1', 1]])
+      end
+    end
+
+    context 'when the ips are filled' do
+      before do
+        allow(subject).to receive(:ips).and_return(empty_ips)
+      end
+
+      it 'returns an empty rank' do
+        expect(subject.top100()).to eq([])
+      end
+    end
+  end
 end
