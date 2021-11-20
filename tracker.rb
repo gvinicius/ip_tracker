@@ -12,6 +12,6 @@ class Tracker
   def top100()
     return [] if ips.empty?
 
-    ips.tally.to_a.group_by { |key, _| key }.map(&:last).flatten(1)
+    ips.tally.to_a.group_by { |key, _| key }.map(&:last).flatten(1)[0, 99]
   end
 end
