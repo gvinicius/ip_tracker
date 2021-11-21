@@ -18,6 +18,23 @@ describe Tracker do
     end
   end
 
+  describe '#count_entries(ips)' do
+    let(:ips) { [['145.87.2.109']*90, ['0.0.0.0']*9, ['1.8.2.1']].flatten }
+    let(:empty_ips) { [] }
+
+    context 'when the ips param is filled' do
+      it 'returns the correct rank' do
+        expect(subject.count_entries(ips)).to eq([['145.87.2.109', 90], ['0.0.0.0', 9], ['1.8.2.1', 1]])
+      end
+    end
+
+    context 'when the ips param is filled' do
+      it 'returns an empty rank' do
+        expect(subject.count_entries(empty_ips)).to eq([])
+      end
+    end
+  end
+
   describe '#top100()' do
     let(:ips) { [['145.87.2.109']*90, ['0.0.0.0']*9, ['1.8.2.1']].flatten }
     let(:empty_ips) { [] }
